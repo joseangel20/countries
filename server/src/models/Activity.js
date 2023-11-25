@@ -4,11 +4,16 @@ module.exports = (sequelize) => {
   sequelize.define(
     "Activity",
     {
-      ID: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV1,
-        primaryKey: true,
-      },
+      // ID: {
+      //   type: DataTypes.UUID,
+      //   defaultValue: DataTypes.UUIDV1,
+      //   primaryKey: true,
+      // },
+      // idActivity: {
+      //   type: DataTypes.INTEGER,
+      //   // primaryKey: true,
+      //   // autoIcrement:true
+      // },
       name: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -18,7 +23,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       duration: { type: DataTypes.INTEGER },
-      Season: {
+      season: {
         type: DataTypes.ENUM("Verano", "Otoño", "Invierno", "Primavera"),
         allowNull: false,
       },
