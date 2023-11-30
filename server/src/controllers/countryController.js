@@ -21,9 +21,21 @@ const getCountryById = async (req, res) => {
   if (typeof idPais === "string" && idPais.length === 3) {
     try {
       const country = await Country.findByPk(idPais);
-      const hisActivity = await country.getActivities();
 
-      res.status(200).send({ ...country.dataValues, hisActivity });
+      // Se obtiene las actividades asociadas al país
+      const activities = await country.getActivities();
+      const activitiesContry = [];
+
+      // Se filtra las propiedades a enviar al cliente y se agrega
+      // en el arreglo activitiesContry
+      for (activity of activities) {
+        const { name, hinders, duration, season } = activity;
+        activitiesContry.push({ name, hinders, duration, season });
+      }
+
+      res
+        .status(200)
+        .send({ ...country.dataValues, activities: activitiesContry });
     } catch (error) {
       res.status(404).send({ error: "El país no fue encontrado" });
     }
@@ -41,7 +53,7 @@ const getCountries = async (req, res) => {
     const response = await Country.findAll();
     res.status(200).send(response);
   } catch (error) {
-    res.status(400).send({ error: "No se hay elementos." });
+    res.status(400).send({ error: "No se encontraron elementos." });
   }
 };
 
